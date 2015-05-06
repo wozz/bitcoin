@@ -99,7 +99,6 @@ void CZMQPublisher::Shutdown()
 
 
 // Internal function to pack a zmq_msg_t and send it
-// Note: assumes topic is a valid null terminated C string
 int CZMQPublisher::Publish(const void* data, size_t size, int flags)
 {
 #if ENABLE_ZMQ
@@ -170,7 +169,7 @@ void CZMQPublisher::UpdatedBlockTip(const CBlock &block)
         if (rc==0)
             Publish(hash.begin(), hash.size(), 0);
     }
-    if (format==NetworkFormat)
+    else if (format==NetworkFormat)
     {
         /*
         CBlock block;
